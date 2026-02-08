@@ -3,6 +3,7 @@ package lld.parkinglot.model;
 import lld.parkinglot.core.ParkingSlot;
 import lld.parkinglot.core.ParkingTicket;
 
+import lld.parkinglot.core.SlotAllocation;
 import lld.parkinglot.core.Vehicle;
 
 import java.util.*;
@@ -11,8 +12,10 @@ import java.util.*;
 public class ParkingLot {
     List<ParkingSlot> slots;
     HashMap<String, ParkingTicket> activeTickets =  new HashMap<>();
-    public ParkingLot(List<ParkingSlot> slots) {
+    SlotAllocation slotAllocation;
+    public ParkingLot(List<ParkingSlot> slots, SlotAllocation slotAllocation) {
         this.slots = slots;
+        this.slotAllocation = slotAllocation;
     }
 
     private ParkingSlot findParkingSlots(Vehicle vehicle) {
@@ -24,7 +27,7 @@ public class ParkingLot {
         return null;
     }
     public ParkingTicket parkVehicle(Vehicle vehicle) {
-        ParkingSlot slot = findParkingSlots(vehicle);
+        ParkingSlot slot = slotAllocation.selectSlot(slots, vehicle);
         if (slot == null) {
             throw  new RuntimeException("Slot not found");
         }else{

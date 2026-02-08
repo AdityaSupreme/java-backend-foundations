@@ -1,9 +1,6 @@
 package lld.parkinglot;
 
-import lld.parkinglot.core.ParkingSlot;
-import lld.parkinglot.core.ParkingTicket;
-import lld.parkinglot.core.Vehicle;
-import lld.parkinglot.core.VehicleType;
+import lld.parkinglot.core.*;
 import lld.parkinglot.model.ParkingLot;
 import java.util.*;
 
@@ -14,7 +11,8 @@ public class App {
                 new ParkingSlot("S2", VehicleType.BIKE),
                 new ParkingSlot("S3", VehicleType.TRUCK)
         );
-        ParkingLot parkingLot = new ParkingLot(slots);
+        SlotAllocation slotStrategy = new FirstSlotAllocation();
+        ParkingLot parkingLot = new ParkingLot(slots, slotStrategy);
         Vehicle car = new Vehicle("KA-01-1234", VehicleType.CAR);
         ParkingTicket ticket = parkingLot.parkVehicle(car);
 
